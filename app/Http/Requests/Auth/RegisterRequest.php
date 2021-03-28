@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'fullname' => 'required|string|max:100',
             'username' => 'required|string|alpha_dash|min:5|max:20|unique:user,username',
             'email' => 'required|string|email|max:100|unique:user,email',
-            'phone' => 'required|numeric|max:100|unique:user,phone',
+            'phone' => 'required|numeric|unique:user,phone',
             'password' => 'required|string|alpha_dash|confirmed|min:8',
         ];
     }

@@ -10,8 +10,9 @@ Simple laravel 8 project
 ## Function List
 
 * [x] User Migrate and Seeder
-* [x] Auth Login
 * [x] Auth Register
+* [x] Auth Email Verification
+* [x] Auth Login
 * [x] Auth Forgot Password
 
 ## Installation

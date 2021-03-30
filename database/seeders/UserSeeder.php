@@ -30,6 +30,7 @@ class UserSeeder extends Seeder
                 'fullname' => 'admin',
                 'username' => 'admin',
                 'email' => 'admin@email.com',
+                'email_verified_at' => now(),
                 'phone' => '01234567',
                 'password' => app('hash')->make('admin'),
             ],
@@ -41,8 +42,12 @@ class UserSeeder extends Seeder
         $user->fullname = 'user';
         $user->username = 'user';
         $user->email = 'user@email.com';
+        $user->email_verified_at = now();
         $user->phone = '7890123';
         $user->password = app('hash')->make('user');
         $user->save();
+
+        // Create user random
+        User::factory(5)->create();
     }
 }

@@ -18,8 +18,5 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
         ]);
-
-        // Create user random
-        \App\Models\User::factory(5)->create();
     }
 }

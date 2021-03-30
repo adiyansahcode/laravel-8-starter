@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -8,6 +10,8 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/register', [RegisteredUserController::class, 'create'])
@@ -62,3 +66,18 @@ Route::post('/confirm-password', [ConfirmablePasswordController::class, 'store']
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
+
+Route::get('/profile', [ProfileController::class, '__invoke'])
+                ->middleware('auth')
+                ->name('profile');
+
+Route::get('/setting/profile', [SettingController::class, 'profile'])
+                ->middleware(['auth', 'password.confirm'])
+                ->name('setting.profile');
+
+Route::put('/setting/profile', [SettingController::class, 'profileUpdate'])
+                ->middleware('auth');
+
+Route::get('/log', [ProfileController::class, 'log'])
+                ->middleware('auth')
+                ->name('log');

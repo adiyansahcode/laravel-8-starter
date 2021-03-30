@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
-class RegisterRequest extends FormRequest
+class SettingProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -38,26 +38,19 @@ class RegisterRequest extends FormRequest
                 'alpha_dash',
                 'min:5',
                 'max:20',
-                'unique:user,username'
+                Rule::unique(\App\Models\User::class, 'username')->ignore($this->user()),
             ],
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:100',
-                'unique:user,email'
+                Rule::unique(\App\Models\User::class, 'email')->ignore($this->user()),
             ],
             'phone' => [
                 'required',
                 'numeric',
-                'unique:user,phone'
-            ],
-            'password' => [
-                'required',
-                'string',
-                'alpha_dash',
-                'confirmed',
-                'min:8'
+                Rule::unique(\App\Models\User::class, 'phone')->ignore($this->user()),
             ],
         ];
     }

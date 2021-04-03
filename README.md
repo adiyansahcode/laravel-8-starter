@@ -20,7 +20,9 @@ Simple laravel 8 project
 * clone this project `git clone https://github.com/adiyansahcode/laravel-crud.git`
 * Create .env file `cp .env.example .env`
 * edit config database and mail in .env file
-* Run composer `composer install`
+* Install composer package `composer install`
+* Install npm package `npm install`
+* Run laravel Mix `npm run dev`
 * clean cache, create key and create storage
 ```
 php artisan optimize:clear

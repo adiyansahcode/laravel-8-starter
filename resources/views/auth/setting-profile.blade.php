@@ -11,7 +11,7 @@
                 <!-- Validation Errors -->
                 <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-                <form method="POST" action="{{ route('setting.profile') }}">
+                <form method="POST" action="{{ route('setting.security') }}">
                     @method('PUT')
                     @csrf
 
@@ -26,7 +26,14 @@
                     <div class="mt-4">
                         <x-label for="username" :value="__('Username')" />
 
-                        <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username', Auth::user()->username)" required />
+                        <x-input
+                            id="username"
+                            class="block mt-1 w-full"
+                            type="text"
+                            name="username"
+                            :value="old('username', Auth::user()->username)"
+                            required
+                        />
                     </div>
 
                     <!-- Email Address -->

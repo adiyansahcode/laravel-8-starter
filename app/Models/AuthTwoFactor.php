@@ -1,25 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable implements MustVerifyEmail
+class AuthTwoFactor extends Model
 {
     use HasFactory;
-    use Notifiable;
 
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'user';
+    protected $table = 'auth_two_factor';
 
     /**
      * The attributes that are mass assignable.
@@ -28,17 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'uuid',
-        'fullname',
-        'username',
-        'email',
-        'phone',
-        'password',
-        'email_verified_at',
-        'last_login_at',
-        'last_login_ip',
-        'two_factor_code',
-        'two_factor_expires_at',
-        'auth_two_factor_id',
+        'name',
     ];
 
     /**
@@ -46,10 +31,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = [];
 
     /**
      * The attributes that should be cast to native types.
@@ -57,11 +39,9 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime:Y-m-d H:i:s',
         'created_at' => 'datetime:Y-m-d H:i:s',
         'updated_at' => 'datetime:Y-m-d H:i:s',
         'deleted_at' => 'datetime:Y-m-d H:i:s',
-        'last_login_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     /**
@@ -71,8 +51,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    public function authTwoFactor()
+    public function user()
     {
-        return $this->belongsTo(AuthTwoFactor::class, 'auth_two_factor_id');
+        return $this->hasOne(User::class, 'auth_two_factor_id');
     }
 }

@@ -78,6 +78,13 @@ Route::get('/setting/profile', [SettingController::class, 'profile'])
 Route::put('/setting/profile', [SettingController::class, 'profileUpdate'])
                 ->middleware('auth');
 
+Route::get('/setting/security', [SettingController::class, 'security'])
+                ->middleware(['auth', 'password.confirm'])
+                ->name('setting.security');
+
+Route::put('/setting/security', [SettingController::class, 'securityUpdate'])
+                ->middleware(['auth']);
+
 Route::get('/log', [ProfileController::class, 'log'])
                 ->middleware('auth')
                 ->name('log');

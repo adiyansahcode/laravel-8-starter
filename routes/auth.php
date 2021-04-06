@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\AuthTwoFactorController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
@@ -26,7 +27,18 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-                ->middleware('guest');
+                ->middleware(['guest', 'authTwofactor']);
+
+Route::get('/otp/verify', [AuthTwoFactorController::class, 'create'])
+                ->middleware(['auth'])
+                ->name('otp.verify');
+
+Route::post('/otp/verify', [AuthTwoFactorController::class, 'store'])
+                ->middleware(['auth']);
+
+Route::get('/otp/resend', [AuthTwoFactorController::class, 'resend'])
+                ->middleware(['auth'])
+                ->name('otp.resend');
 
 Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->middleware('guest')

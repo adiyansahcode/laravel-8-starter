@@ -51,6 +51,11 @@ class AuthTwoFactor extends Model
      */
     protected $dateFormat = 'Y-m-d H:i:s';
 
+    public function scopeEmail($query)
+    {
+        return $query->where('auth_two_factor_id', 1);
+    }
+
     public function user()
     {
         return $this->hasOne(User::class, 'auth_two_factor_id');

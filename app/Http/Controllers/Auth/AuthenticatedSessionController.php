@@ -9,6 +9,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\AuthTwoFactorCode;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -36,9 +37,14 @@ class AuthenticatedSessionController extends Controller
 
         $auth = Auth::user();
         $auth->update([
-            'last_login_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'last_login_at' => now()->toDateTimeString(),
             'last_login_ip' => $request->getClientIp(),
         ]);
+
+        if (isset($auth->authTwoFactor)) {
+            $auth->generateTwoFactorCode();
+            $auth->notify(new AuthTwoFactorCode());
+        }
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }

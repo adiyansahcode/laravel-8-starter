@@ -62,6 +62,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'updated_at' => 'datetime:Y-m-d H:i:s',
         'deleted_at' => 'datetime:Y-m-d H:i:s',
         'last_login_at' => 'datetime:Y-m-d H:i:s',
+        'two_factor_expires_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     /**
@@ -70,6 +71,22 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var string
      */
     protected $dateFormat = 'Y-m-d H:i:s';
+
+    public function generateTwoFactorCode()
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = rand(100000, 999999);
+        $this->two_factor_expires_at = now()->addMinutes(10);
+        $this->save();
+    }
+
+    public function resetTwoFactorCode()
+    {
+        $this->timestamps = false;
+        $this->two_factor_code = null;
+        $this->two_factor_expires_at = null;
+        $this->save();
+    }
 
     public function authTwoFactor()
     {

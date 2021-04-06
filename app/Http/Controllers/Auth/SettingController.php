@@ -42,7 +42,7 @@ class SettingController extends Controller
             'phone' => $request->phone,
         ]);
 
-        return redirect()->route('profile')->with('status', 'Profile Updated!');
+        return redirect()->route('profile')->with('status', 'Profile Updated !');
     }
 
     /**

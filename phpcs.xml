@@ -20,6 +20,9 @@
     <exclude-pattern>*/docs/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
     <exclude-pattern>*/migrations/*</exclude-pattern>
+    <exclude-pattern>.phpstorm.meta.php</exclude-pattern>
+    <exclude-pattern>_ide_helper.php</exclude-pattern>
+    <exclude-pattern>_ide_helper_models.php</exclude-pattern>
 
     <arg name="report" value="summary"/>
     <arg name="colors"/>

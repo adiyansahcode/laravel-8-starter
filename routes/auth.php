@@ -30,11 +30,11 @@ Route::post('/login', [AuthenticatedSessionController::class, 'store'])
                 ->middleware(['guest', 'authTwofactor']);
 
 Route::get('/otp/verify', [AuthTwoFactorController::class, 'create'])
-                ->middleware(['auth'])
+                ->middleware(['auth', 'authTwofactor'])
                 ->name('otp.verify');
 
 Route::post('/otp/verify', [AuthTwoFactorController::class, 'store'])
-                ->middleware(['auth']);
+                ->middleware(['auth', 'authTwofactor']);
 
 Route::get('/otp/resend', [AuthTwoFactorController::class, 'resend'])
                 ->middleware(['auth'])

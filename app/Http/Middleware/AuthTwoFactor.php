@@ -20,8 +20,7 @@ class AuthTwoFactor
         $auth = Auth::user();
         if (
             auth()->check()
-            && $auth->two_factor_code
-            && isset($auth->authTwoFactor)
+            && !empty($auth->two_factor_code)
         ) {
             if (now()->gt($auth->two_factor_expires_at)) {
                 $auth->resetTwoFactorCode();
@@ -29,7 +28,7 @@ class AuthTwoFactor
 
                 return redirect()
                     ->route('login')
-                    ->withErrors(['The two factor code has expired. Please login again.']);
+                    ->with('error', 'The two factor code has expired. Please login again.');
             }
 
             if (!$request->is('otp*')) {

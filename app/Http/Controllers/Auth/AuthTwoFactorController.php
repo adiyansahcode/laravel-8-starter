@@ -46,7 +46,7 @@ class AuthTwoFactorController extends Controller
         return redirect()
             ->back()
             ->withErrors([
-                'two_factor_code' => 'The two factor code you have entered does not match'
+                'twoFactorCode' => 'The two factor code you have entered does not match'
             ]);
     }
 
@@ -56,6 +56,6 @@ class AuthTwoFactorController extends Controller
         $auth->generateTwoFactorCode();
         $auth->notify(new AuthTwoFactorCode());
 
-        return redirect()->back()->withMessage('The two factor code has been sent again');
+        return redirect()->back()->with('success', 'The two factor code has been sent again');
     }
 }

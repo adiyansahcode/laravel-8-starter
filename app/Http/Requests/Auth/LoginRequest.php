@@ -33,10 +33,12 @@ class LoginRequest extends FormRequest
         return [
             'username' => [
                 'required',
+                'filled',
                 'string'
             ],
             'password' => [
                 'required',
+                'filled',
                 'string'
             ],
         ];
@@ -75,7 +77,7 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'username' => __('auth.failed'),
+                'login' => __('auth.failed'),
             ]);
         }
 

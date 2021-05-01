@@ -20,5 +20,12 @@
         "postcss-import": "^12.0.1",
         "semistandard": "^16.0.0",
         "tailwindcss": "^2.1.1"
+    },
+    "id": "blade",
+    "extensions": [
+        ".blade.php"
+    ],
+    "files.associations": {
+        "*.blade.php": "html"
     }
 }

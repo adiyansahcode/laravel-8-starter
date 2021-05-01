@@ -21,6 +21,7 @@ class AuthTwoFactor
         if (
             auth()->check()
             && !empty($auth->two_factor_code)
+            && !empty($auth->authTwoFactor)
         ) {
             if (now()->gt($auth->two_factor_expires_at)) {
                 $auth->resetTwoFactorCode();

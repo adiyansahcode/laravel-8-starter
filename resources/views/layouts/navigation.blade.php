@@ -94,14 +94,14 @@
       </div>
 
       <div class="mt-3 space-y-1">
+
+        <x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
+          {{ __('Profile') }}
+        </x-responsive-nav-link>
+
         <!-- Authentication -->
         <form method="POST" action="{{ route('logout') }}">
           @csrf
-
-          <x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')">
-            {{ __('Profile') }}
-          </x-responsive-nav-link>
-
           <x-responsive-nav-link
             :href="route('logout')"
             onclick="event.preventDefault();

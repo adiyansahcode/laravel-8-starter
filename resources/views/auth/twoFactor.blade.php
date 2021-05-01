@@ -9,7 +9,7 @@
         <x-bui-alert type="success" class="mb-4 font-medium text-sm text-green-600" />
         <x-bui-alert type="error" class="mb-4 font-medium text-sm text-red-600" />
 
-        <x-bui-form action="{{ route('otp.verify') }}">
+        <x-bui-form id="form-otp" action="{{ route('otp.verify') }}">
             <fieldset>
                 <div>
                     <legend class="text-base font-medium text-gray-900">Two Factor Verification</legend>
@@ -35,11 +35,17 @@
             </fieldset>
 
             <div class="flex flex-wrap content-center justify-between py-5">
-                <x-button>
-                    {{ __('Verify') }}
-                </x-button>
+              <x-button>
+                  {{ __('Verify') }}
+              </x-button>
+
+              <x-button onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
+                {{ __('Log out') }}
+              </x-button>
             </div>
         </x-bui-form>
-        <x-bui-logout class="text-gray-500" />
+        <form id="form-logout" method="POST" action="{{ route('logout') }}">
+          @csrf
+        </form>
     </x-auth-card>
 </x-guest-layout>

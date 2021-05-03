@@ -18,4 +18,5 @@
   [x-cloak] {
     display: none;
   }
+
 </style>

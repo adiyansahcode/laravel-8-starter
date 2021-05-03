@@ -8,9 +8,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\SettingProfileRequest;
 use App\Http\Requests\Auth\SettingSecurityRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Auth;
 use App\Models\AuthTwoFactor;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
@@ -21,7 +21,11 @@ class SettingController extends Controller
      */
     public function profile()
     {
-        return view('auth.setting-profile');
+        $data = [
+            'user' => Auth::user(),
+        ];
+
+        return view('auth.setting-profile', $data);
     }
 
     /**
@@ -35,12 +39,26 @@ class SettingController extends Controller
     public function profileUpdate(SettingProfileRequest $request)
     {
         $auth = Auth::user();
-        $auth->update([
-            'fullname' => $request->fullname,
-            'username' => $request->username,
-            'email' => $request->email,
-            'phone' => $request->phone,
-        ]);
+        $auth->fullname = $request->fullname;
+        $auth->username = $request->username;
+        $auth->email = $request->email;
+        $auth->phone = $request->phone;
+
+        if ($request->image) {
+            Storage::delete('public/images/' . $auth->image);
+
+            $fileName = time() . '_' . $request->image->getClientOriginalName();
+            Storage::putFileAs(
+                'public/images',
+                $request->file('image'),
+                $fileName
+            );
+
+            $auth->image = $fileName;
+            $auth->image_url = asset('storage/images/' . $fileName);
+        }
+
+        $auth->save();
 
         return redirect()->route('profile')->with('status', 'Profile Updated !');
     }

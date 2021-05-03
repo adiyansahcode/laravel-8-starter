@@ -29,11 +29,13 @@ class SettingProfileRequest extends FormRequest
         return [
             'fullname' => [
                 'required',
+                'filled',
                 'string',
                 'max:100'
             ],
             'username' => [
                 'required',
+                'filled',
                 'string',
                 'alpha_dash',
                 'min:5',
@@ -42,16 +44,22 @@ class SettingProfileRequest extends FormRequest
             ],
             'email' => [
                 'required',
+                'filled',
                 'string',
-                'email',
+                'email:rfc,dns',
                 'max:100',
                 Rule::unique(\App\Models\User::class, 'email')->ignore($this->user()),
             ],
             'phone' => [
                 'required',
+                'filled',
                 'numeric',
                 Rule::unique(\App\Models\User::class, 'phone')->ignore($this->user()),
             ],
+            'image' => [
+                'filled',
+                'image'
+            ]
         ];
     }
 }

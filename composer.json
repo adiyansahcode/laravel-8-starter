@@ -22,6 +22,7 @@
         "khatabwedaa/blade-css-icons": "^1.0",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
+        "owenvoke/blade-fontawesome": "^1.8",
         "ramsey/uuid": "^4.1"
     },
     "require-dev": {

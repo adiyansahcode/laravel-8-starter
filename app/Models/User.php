@@ -39,6 +39,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'two_factor_code',
         'two_factor_expires_at',
         'auth_two_factor_id',
+        'image',
+        'image_url',
     ];
 
     /**
@@ -86,6 +88,27 @@ class User extends Authenticatable implements MustVerifyEmail
         $this->two_factor_code = null;
         $this->two_factor_expires_at = null;
         $this->save();
+    }
+
+    // User Model
+    public function getImage()
+    {
+        if ($this->imageUrlExists($this->image_url)) {
+            return $this->image_url;
+        } else {
+            return asset('storage/images/profile-pic-male.jpg');
+        }
+    }
+
+    public function imageUrlExists(?string $url): bool
+    {
+        if (empty($url)) {
+            return false;
+        }
+
+        $headers = get_headers($url);
+
+        return stripos($headers[0], "200 OK") ? true : false;
     }
 
     public function authTwoFactor()

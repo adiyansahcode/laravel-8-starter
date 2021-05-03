@@ -28,14 +28,16 @@
         </div>
       </fieldset>
 
-      <div class="flex flex-wrap content-center justify-between py-5">
-        <x-button>
-          {{ __('Verify') }}
-        </x-button>
+      <div class="py-5">
+        <a href="#" onclick="event.preventDefault(); document.getElementById('form-logout').submit();"
+          class="items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-gray-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+          Log out
+        </a>
 
-        <x-button onclick="event.preventDefault(); document.getElementById('form-logout').submit();">
-          {{ __('Log out') }}
-        </x-button>
+        <button type="submit"
+          class="items-center justify-center float-right px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+          Verify
+        </button>
       </div>
     </x-bui-form>
 

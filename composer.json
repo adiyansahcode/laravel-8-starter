@@ -27,10 +27,10 @@
         "renatomarinho/laravel-page-speed": "^2.0"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
         "barryvdh/laravel-ide-helper": "^2.9",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "itsgoingd/clockwork": "^5.0",
         "laravel/breeze": "^1.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
@@ -52,7 +52,13 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan optimize",
+            "@php artisan event:cache",
+            "@php artisan view:cache",
+            "@php artisan icons:clear",
+            "@php artisan icons:cache",
+            "@php artisan clockwork:clean"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

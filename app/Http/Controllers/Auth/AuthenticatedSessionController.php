@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Notifications\AuthTwoFactorCode;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -39,12 +38,7 @@ class AuthenticatedSessionController extends Controller
             'last_login_ip' => $request->getClientIp(),
         ]);
 
-        if (isset($auth->authTwoFactor)) {
-            $auth->generateTwoFactorCode();
-            $auth->notify(new AuthTwoFactorCode());
-
-            return redirect()->route('otp.verify');
-        }
+        $auth->sendTwoFactorCodeNotification();
 
         return redirect()->route('dashboard');
     }

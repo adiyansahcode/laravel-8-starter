@@ -53,8 +53,7 @@ class AuthTwoFactorController extends Controller
     public function resend()
     {
         $auth = Auth::user();
-        $auth->generateTwoFactorCode();
-        $auth->notify(new AuthTwoFactorCode());
+        $auth->sendTwoFactorCodeNotification();
 
         return redirect()->back()->with('success', 'The two factor code has been sent again');
     }

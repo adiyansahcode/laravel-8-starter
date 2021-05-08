@@ -1,0 +1,1 @@
+<x-fab-laravel {{ $attributes }} />

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AuthTwoFactorCode extends Notification implements ShouldQueue
+class AuthTwoFactorCodeNotification extends Notification
 {
     use Queueable;
 
@@ -41,9 +41,10 @@ class AuthTwoFactorCode extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage())
+            ->subject('Two Factor Authentication Code')
             ->line('Your two factor code is ' . $notifiable->two_factor_code)
             ->line('The code will expire in 10 minutes')
-            ->line('If you have not tried to login, ignore this message.');
+            ->line('If you have not tried to login, please contact admin.');
     }
 
     /**

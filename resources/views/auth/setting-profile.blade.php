@@ -10,7 +10,7 @@
     <div class="max-w-7xl sm:max-w-md mx-auto sm:px-6 md:px-6 lg:px-8 xl:px-8">
       <div class="shadow-md overflow-hidden sm:rounded-md">
 
-        <x-bui-form action="{{ route('setting.profile') }}" has-files novalidate autocomplete="off">
+        <x-form action="{{ route('setting.profile') }}" has-files novalidate autocomplete="off">
           @method('PUT')
           @csrf
           <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
@@ -43,7 +43,7 @@
                       style="background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url('null');">
                     </span>
                   </div>
-                  <x-bui-error field="image" class="mt-1 font-medium text-sm text-red-600" />
+                  <x-error field="image" class="mt-1 font-medium text-sm text-red-600" />
 
                   <button type="button" x-on:click.prevent="$refs.photo.click()"
                     class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mt-2 ml-3">
@@ -55,7 +55,7 @@
 
             <!-- Fullname -->
             <div class="block">
-              <x-bui-label for="fullname" class="block font-medium text-sm text-gray-700" />
+              <x-label for="fullname" class="block font-medium text-sm text-gray-700" />
               @error('fullname')
                 @php
                     $class = "mt-1 block w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-300 focus:ring-opacity-50";
@@ -65,13 +65,13 @@
                     $class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-300 focus:ring-opacity-50";
                 @endphp
               @endif
-              <x-bui-input id="fullname" name="fullname" required autofocus :value="old('fullname', $user->fullname)" :class="$class" />
-              <x-bui-error field="fullname" class="mt-1 font-medium text-sm text-red-600" />
+              <x-input id="fullname" name="fullname" required autofocus :value="old('fullname', $user->fullname)" :class="$class" />
+              <x-error field="fullname" class="mt-1 font-medium text-sm text-red-600" />
             </div>
 
             <!-- Username -->
             <div class="block">
-              <x-bui-label for="username" class="block font-medium text-sm text-gray-700" />
+              <x-label for="username" class="block font-medium text-sm text-gray-700" />
               @error('username')
                 @php
                     $class = "mt-1 block w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-300 focus:ring-opacity-50";
@@ -81,13 +81,13 @@
                     $class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-300 focus:ring-opacity-50";
                 @endphp
               @endif
-              <x-bui-input id="username" name="username" required :value="old('username', $user->username)" :class="$class" />
-              <x-bui-error field="username" class="mt-1 font-medium text-sm text-red-600" />
+              <x-input id="username" name="username" required :value="old('username', $user->username)" :class="$class" />
+              <x-error field="username" class="mt-1 font-medium text-sm text-red-600" />
             </div>
 
             <!-- email -->
             <div class="block">
-              <x-bui-label for="email" class="block font-medium text-sm text-gray-700" />
+              <x-label for="email" class="block font-medium text-sm text-gray-700" />
               @error('email')
                 @php
                     $class = "mt-1 block w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-300 focus:ring-opacity-50";
@@ -97,13 +97,13 @@
                     $class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-300 focus:ring-opacity-50";
                 @endphp
               @endif
-              <x-bui-input id="email" name="email" type="email" required :value="old('email', $user->email)" :class="$class" />
-              <x-bui-error field="email" class="mt-1 font-medium text-sm text-red-600" />
+              <x-input id="email" name="email" type="email" required :value="old('email', $user->email)" :class="$class" />
+              <x-error field="email" class="mt-1 font-medium text-sm text-red-600" />
             </div>
 
             <!-- Phone Number -->
             <div class="block">
-              <x-bui-label for="phone" class="block font-medium text-sm text-gray-700" />
+              <x-label for="phone" class="block font-medium text-sm text-gray-700" />
               @error('phone')
                 @php
                     $class = "mt-1 block w-full rounded-md border-red-300 shadow-sm focus:border-red-300 focus:ring focus:ring-red-300 focus:ring-opacity-50";
@@ -113,8 +113,8 @@
                     $class = "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-300 focus:ring focus:ring-gray-300 focus:ring-opacity-50";
                 @endphp
               @endif
-              <x-bui-input id="phone" name="phone" required :value="old('phone', $user->phone)" :class="$class" />
-              <x-bui-error field="phone" class="mt-1 font-medium text-sm text-red-600" />
+              <x-input id="phone" name="phone" required :value="old('phone', $user->phone)" :class="$class" />
+              <x-error field="phone" class="mt-1 font-medium text-sm text-red-600" />
             </div>
           </div>
 
@@ -129,7 +129,7 @@
               Update
             </button>
           </div>
-        </x-bui-form>
+        </x-form>
       </div>
     </div>
   </div>

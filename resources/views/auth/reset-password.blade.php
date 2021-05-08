@@ -1,48 +1,60 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<x-layouts.base :title="__('Reset Password')">
+  <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
+    <div>
+      <a href="{{ url('/') }}">
+        <x-layouts.application-logo class="w-20 h-20 fill-current text-gray-700" />
+      </a>
+    </div>
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+      <h2 class="text-center font-semibold text-2xl text-gray-700 mb-5">
+        {{ $component->title }}
+      </h2>
 
-        <form method="POST" action="{{ route('password.update') }}">
-            @csrf
+      <x-alert type="success" class="mb-4 font-medium text-sm text-green-600" />
+      <x-alert type="error" class="mb-4 font-medium text-sm text-red-600" />
 
-            <!-- Password Reset Token -->
-            <input type="hidden" name="token" value="{{ $request->route('token') }}">
+      <x-form action="{{ route('password.update') }}" novalidate autocomplete="off">
+        <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
-            <!-- Email Address -->
-            <div>
-                <x-label for="email" :value="__('Email')" />
+        <div>
+          <x-label for="email" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('username') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-input id="email" name="email" required readonly :value="old('email', $request->email)"
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="email" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email', $request->email)" required autofocus />
-            </div>
+        <div class="mt-4">
+          <x-label for="password" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('password') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-form.password-show id="password" name="password"
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="password" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+        <div class="mt-4">
+          <x-label for="password_confirmation" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('password') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-form.password-show id="password_confirmation" name="password_confirmation"
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="password" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-                <x-input id="password" class="block mt-1 w-full" type="password" name="password" required />
-            </div>
+        <div class="block mt-6">
+          <button type="submit"
+            class="w-full px-2 py-2 items-center bg-gray-800 border border-transparent rounded-md font-medium text-base text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 flex-auto">
+            Reset
+          </button>
+        </div>
+      </x-form>
 
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                    type="password"
-                                    name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <x-button>
-                    {{ __('Reset Password') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+    </div>
+  </div>
+</x-layouts.base>

@@ -5,6 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\AuthTwoFactor
+ *
+ * @property int $id
+ * @property string $uuid
+ * @property \datetime|null $created_at
+ * @property \datetime|null $updated_at
+ * @property \datetime|null $deleted_at
+ * @property string|null $name
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor email()
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor query()
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor whereUuid($value)
+ * @mixin \Eloquent
+ */
 class AuthTwoFactor extends Model
 {
     use HasFactory;
@@ -51,12 +73,23 @@ class AuthTwoFactor extends Model
      */
     protected $dateFormat = 'Y-m-d H:i:s';
 
-    public function scopeEmail($query)
+    /**
+     * Undocumented function
+     *
+     * @param [type] $query
+     * @return void
+     */
+    public function scopeIsEmail($query)
     {
         return $query->where('auth_two_factor_id', 1);
     }
 
-    public function user()
+    /**
+     * Relation user hasOne authTwoFactor (one to one)
+     *
+     * @return object
+     */
+    public function user(): object
     {
         return $this->hasOne(User::class, 'auth_two_factor_id');
     }

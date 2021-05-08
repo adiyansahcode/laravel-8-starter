@@ -1,4 +1,5 @@
-<x-html :title="isset($title) ? $title . ' - ' . config('app.name') : ''">
+<x-html :title="isset($title) ? $title . ' | ' . config('app.name') : ''">
+
   <x-slot name="head">
     <!-- favicon -->
     <!-- https://realfavicongenerator.net/ -->
@@ -10,6 +11,9 @@
     <meta name="msapplication-TileColor" content="#ef3b2d" />
     <meta name="theme-color" content="#ffffff" />
 
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}" defer></script>
+
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('/css/app.css') }}" />
 
@@ -17,24 +21,8 @@
     @stack('styles')
   </x-slot>
 
-  <div class="min-h-screen bg-gray-100">
-    @include('layouts.navigation')
+  {{ $slot }}
 
-    <!-- Page Heading -->
-    <header class="bg-white shadow">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        {{ $header }}
-      </div>
-    </header>
-
-    <!-- Page Content -->
-    <main>
-      {{ $slot }}
-    </main>
-  </div>
-
-  <!-- Scripts -->
-  <script src="{{ mix('js/app.js') }}" defer></script>
   @bukScripts
   @stack('scripts')
 </x-html>

@@ -1,4 +1,4 @@
-<x-bui-html :title="isset($title) ? $title . ' - ' . config('app.name') : ''">
+<x-html :title="isset($title) ? $title . ' - ' . config('app.name') : ''">
   <x-slot name="head">
     <!-- favicon -->
     <!-- https://realfavicongenerator.net/ -->
@@ -23,4 +23,4 @@
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}" defer></script>
   @bukScripts
-</x-bui-html>
+</x-html>

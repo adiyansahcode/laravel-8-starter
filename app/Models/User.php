@@ -12,6 +12,8 @@ use App\Notifications\ResetPasswordNotification;
 use App\Notifications\ResetPasswordNotificationQueue;
 use App\Notifications\AuthTwoFactorCodeNotification;
 use App\Notifications\AuthTwoFactorCodeNotificationQueue;
+use App\Notifications\VerifyEmailNotification;
+use App\Notifications\VerifyEmailNotificationQueue;
 
 /**
  * App\Models\User
@@ -133,16 +135,26 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param  string  $token
      * @return void
      */
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         // $this->notify(new ResetPasswordNotification($token));
         $this->notify(new ResetPasswordNotificationQueue($token));
     }
 
     /**
-     * Send a password reset notification to the user.
+     * Send a email verify notification to the user.
      *
-     * @param  string  $token
+     * @return void
+     */
+    public function sendEmailVerificationNotification(): void
+    {
+        // $this->notify(new VerifyEmailNotification());
+        $this->notify(new VerifyEmailNotificationQueue());
+    }
+
+    /**
+     * Send a OTP notification to the user.
+     *
      * @return void
      */
     public function sendTwoFactorCodeNotification(): void

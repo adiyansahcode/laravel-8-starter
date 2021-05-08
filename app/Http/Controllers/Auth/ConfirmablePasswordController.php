@@ -18,7 +18,7 @@ class ConfirmablePasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\View\View
      */
-    public function show(Request $request)
+    public function show(Request $request): object
     {
         return view('auth.confirm-password');
     }
@@ -29,7 +29,7 @@ class ConfirmablePasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return mixed
      */
-    public function store(Request $request)
+    public function store(Request $request): object
     {
         if (
             !Auth::guard('web')->validate([

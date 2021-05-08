@@ -36,7 +36,6 @@ use App\Notifications\AuthTwoFactorCodeNotificationQueue;
  * @property string|null $image
  * @property string|null $image_url
  * @property-read \App\Models\AuthTwoFactor|null $authTwoFactor
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()

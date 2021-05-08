@@ -1,73 +1,94 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+<x-layouts.base :title="__('Create your account')">
+  <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
 
-        <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+    <div>
+      <a href="{{ url('/') }}">
+        <x-layouts.application-logo class="w-20 h-20 fill-current text-gray-700" />
+      </a>
+    </div>
 
-        <form method="POST" action="{{ route('register') }}">
-            @csrf
+    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+      <h2 class="text-center font-semibold text-2xl text-gray-700 mb-5">
+        {{ $component->title }}
+      </h2>
 
-            <!-- Fullname -->
-            <div>
-                <x-label for="fullname" :value="__('Fullname')" />
+      <x-alert type="success" class="mb-4 font-medium text-sm text-green-600" />
+      <x-alert type="error" class="mb-4 font-medium text-sm text-red-600" />
 
-                <x-input id="fullname" class="block mt-1 w-full" type="text" name="fullname" :value="old('fullname')" required autofocus />
-            </div>
+      <x-form action="{{ route('register') }}" novalidate>
 
-            <!-- Username -->
-            <div class="mt-4">
-                <x-label for="username" :value="__('Username')" />
+        <div class="mt-4">
+          <x-label for="fullname" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('fullname') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-input id="fullname" name="fullname" required
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="fullname" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-                <x-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" required />
-            </div>
+        <div class="mt-4">
+          <x-label for="username" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('username') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-input id="username" name="username" required
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="username" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-            <!-- Email Address -->
-            <div class="mt-4">
-                <x-label for="email" :value="__('Email')" />
+        <div class="mt-4">
+          <x-label for="email" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('email') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-email id="email" name="email" required
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="email" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
-            </div>
+        <div class="mt-4">
+          <x-label for="phone" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('phone') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-input id="phone" name="phone" required
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="phone" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-            <!-- Phone Number -->
-            <div class="mt-4">
-                <x-label for="phone" :value="__('Phone Number')" />
+        <div class="mt-4">
+          <x-label for="password" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('password') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-form.password-show id="password" name="password"
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="password" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-                <x-input id="phone" class="block mt-1 w-full" type="text" name="phone" :value="old('phone')" required />
-            </div>
+        <div class="mt-4">
+          <x-label for="password_confirmation" class="block font-medium text-sm text-gray-700" />
+          @php
+            $borderColor = $errors->has('password_confirmation') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+          @endphp
+          <x-form.password-show id="password_confirmation" name="password_confirmation"
+          class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
+          <x-error field="password_confirmation" class="mt-1 font-medium text-sm text-red-600" />
+        </div>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-label for="password" :value="__('Password')" />
+        <div class="mt-4 py-5">
+          <a href="{{ route('login') }}"
+            class="items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-xs text-gray-700 uppercase tracking-widest shadow-sm hover:text-gray-500 focus:outline-none focus:border-gray-400 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150">
+            Sign in
+          </a>
 
-                <x-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="new-password" />
-            </div>
-
-            <!-- Confirm Password -->
-            <div class="mt-4">
-                <x-label for="password_confirmation" :value="__('Confirm Password')" />
-
-                <x-input id="password_confirmation" class="block mt-1 w-full"
-                                type="password"
-                                name="password_confirmation" required />
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
-                    {{ __('Already registered?') }}
-                </a>
-
-                <x-button class="ml-4">
-                    {{ __('Register') }}
-                </x-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+          <button type="submit"
+            class="items-center justify-center float-right px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+            Create Account
+          </button>
+        </div>
+      </x-form>
+    </div>
+  </div>
+</x-layouts.base>

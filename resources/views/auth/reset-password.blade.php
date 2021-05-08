@@ -20,7 +20,7 @@
         <div>
           <x-label for="email" class="block font-medium text-sm text-gray-700" />
           @php
-            $borderColor = $errors->has('username') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+            $borderColor = $errors->has('email') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
           @endphp
           <x-input id="email" name="email" required readonly :value="old('email', $request->email)"
           class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
@@ -40,11 +40,11 @@
         <div class="mt-4">
           <x-label for="password_confirmation" class="block font-medium text-sm text-gray-700" />
           @php
-            $borderColor = $errors->has('password') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
+            $borderColor = $errors->has('password_confirmation') ? 'border-red-300 focus:border-red-300 focus:ring-red-300' : 'border-gray-300 focus:border-gray-300 focus:ring-gray-300';
           @endphp
           <x-form.password-show id="password_confirmation" name="password_confirmation"
           class="mt-1 block w-full rounded-md shadow-sm focus:ring focus:ring-opacity-50 {{ $borderColor }}" />
-          <x-error field="password" class="mt-1 font-medium text-sm text-red-600" />
+          <x-error field="password_confirmation" class="mt-1 font-medium text-sm text-red-600" />
         </div>
 
         <div class="block mt-6">

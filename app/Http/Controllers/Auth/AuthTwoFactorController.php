@@ -5,11 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Notifications\AuthTwoFactorCode;
+use App\Http\Requests\Auth\AuthTwoFactorRequest;
 
 class AuthTwoFactorController extends Controller
 {
@@ -18,7 +15,7 @@ class AuthTwoFactorController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): object
     {
         return view('auth.twoFactor');
     }
@@ -26,21 +23,17 @@ class AuthTwoFactorController extends Controller
     /**
      * Handle an incoming authentication request.
      *
-     * @param  \App\Http\Requests\Auth\LoginRequest  $request
+     * @param  \App\Http\Requests\Auth\AuthTwoFactorRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(AuthTwoFactorRequest $request): object
     {
-        $request->validate([
-            'twoFactorCode' => 'integer|required',
-        ]);
-
-        $auth = Auth::user();
+        $auth = \Auth::user();
 
         if ($request->input('twoFactorCode') === $auth->two_factor_code) {
             $auth->resetTwoFactorCode();
 
-            return redirect()->intended(RouteServiceProvider::HOME);
+            return redirect()->route('dashboard');
         }
 
         return redirect()
@@ -50,9 +43,9 @@ class AuthTwoFactorController extends Controller
             ]);
     }
 
-    public function resend()
+    public function resend(): object
     {
-        $auth = Auth::user();
+        $auth = \Auth::user();
         $auth->sendTwoFactorCodeNotification();
 
         return redirect()->back()->with('success', 'The two factor code has been sent again');

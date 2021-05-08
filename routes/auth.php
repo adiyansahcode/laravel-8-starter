@@ -27,14 +27,14 @@ Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])
-                ->middleware(['guest', 'authTwofactor']);
+                ->middleware(['guest', 'authTwoFactor']);
 
 Route::get('/otp/verify', [AuthTwoFactorController::class, 'create'])
-                ->middleware(['auth', 'authTwofactor'])
+                ->middleware(['auth', 'authTwoFactor'])
                 ->name('otp.verify');
 
 Route::post('/otp/verify', [AuthTwoFactorController::class, 'store'])
-                ->middleware(['auth', 'authTwofactor']);
+                ->middleware(['auth', 'authTwoFactor']);
 
 Route::get('/otp/resend', [AuthTwoFactorController::class, 'resend'])
                 ->middleware(['auth'])

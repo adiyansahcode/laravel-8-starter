@@ -7,7 +7,7 @@
     </div>
 
     <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-      <h2 class="text-center font-semibold text-2xl text-gray-700 mb-5">
+      <h2 class="text-center font-semibold text-2xl capitalize text-gray-700 mb-5">
         {{ $component->title }}
       </h2>
 
@@ -54,7 +54,7 @@
         </div>
 
         <div class="sm:flex sm:flex-wrap mt-8 sm:mb-4 text-sm text-center">
-          <a href="{{ route('password.request') }}" class="flex-2 underline text-md text-gray-600 hover:text-gray-900">
+          <a href="{{ route('password.request') }}" class="flex-2 underline text-md capitalize text-gray-600 hover:text-gray-900">
             Forgot password?
           </a>
 
@@ -62,8 +62,8 @@
             or
           </p>
 
-          <a href="{{ route('register') }}" class="flex-2 underline text-md text-gray-600 hover:text-gray-900">
-            Create an Account
+          <a href="{{ route('register') }}" class="flex-2 underline text-md capitalize text-gray-600 hover:text-gray-900">
+            Create your Account
           </a>
         </div>
       </x-form>

@@ -5,17 +5,19 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Auth\AuthTwoFactorRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class AuthTwoFactorController extends Controller
 {
     /**
-     * Display the login view.
+     * Display the auth two factor view.
      *
      * @return \Illuminate\View\View
      */
-    public function create(): object
+    public function create(): View
     {
         return view('auth.twoFactor');
     }
@@ -26,24 +28,21 @@ class AuthTwoFactorController extends Controller
      * @param  \App\Http\Requests\Auth\AuthTwoFactorRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(AuthTwoFactorRequest $request): object
+    public function store(AuthTwoFactorRequest $request): RedirectResponse
     {
-        $auth = \Auth::user();
+        $request->codeValidate();
 
-        if ($request->input('twoFactorCode') === $auth->two_factor_code) {
-            $auth->resetTwoFactorCode();
-
-            return redirect()->route('dashboard');
-        }
-
-        return redirect()
-            ->back()
-            ->withErrors([
-                'twoFactorCode' => 'The two factor code you have entered does not match'
-            ]);
+        $auth = Auth::user();
+        $auth->resetTwoFactorCode();
+        return redirect()->route('dashboard');
     }
 
-    public function resend(): object
+    /**
+     * resend two factor code authentication.
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function resend(): RedirectResponse
     {
         $auth = \Auth::user();
         $auth->sendTwoFactorCodeNotification();

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthTwoFactor
 {
@@ -16,7 +17,7 @@ class AuthTwoFactor
      */
     public function handle(Request $request, Closure $next)
     {
-        $auth = \Auth::user();
+        $auth = Auth::user();
         if (
             auth()->check()
             && !empty($auth->two_factor_code)
@@ -24,7 +25,7 @@ class AuthTwoFactor
         ) {
             if (now()->gt($auth->two_factor_expires_at)) {
                 $auth->resetTwoFactorCode();
-                \Auth::logout();
+                Auth::logout();
 
                 return redirect()
                     ->route('login')

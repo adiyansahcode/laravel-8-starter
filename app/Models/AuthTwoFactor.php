@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property \datetime|null $deleted_at
  * @property string|null $name
  * @property-read \App\Models\User|null $user
- * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor email()
+ * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor isEmail()
  * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|AuthTwoFactor query()

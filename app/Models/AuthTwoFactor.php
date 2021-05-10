@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\AuthTwoFactor
+ * App\Models\AuthTwoFactor.
  *
  * @property int $id
  * @property string $uuid
@@ -74,18 +76,18 @@ class AuthTwoFactor extends Model
     protected $dateFormat = 'Y-m-d H:i:s';
 
     /**
-     * Undocumented function
+     * auth two factor with email.
      *
-     * @param [type] $query
-     * @return void
+     * @param object $query
+     * @return object
      */
-    public function scopeIsEmail($query)
+    public function scopeIsEmail(object $query): object
     {
         return $query->where('auth_two_factor_id', 1);
     }
 
     /**
-     * Relation user hasOne authTwoFactor (one to one)
+     * Relation user hasOne authTwoFactor (one to one).
      *
      * @return object
      */

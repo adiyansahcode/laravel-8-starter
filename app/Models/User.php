@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Notifications\AuthTwoFactorCodeNotification;
+use App\Notifications\AuthTwoFactorCodeNotificationQueue;
+use App\Notifications\ResetPasswordNotification;
+use App\Notifications\ResetPasswordNotificationQueue;
+use App\Notifications\VerifyEmailNotification;
+use App\Notifications\VerifyEmailNotificationQueue;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Notifications\ResetPasswordNotification;
-use App\Notifications\ResetPasswordNotificationQueue;
-use App\Notifications\AuthTwoFactorCodeNotification;
-use App\Notifications\AuthTwoFactorCodeNotificationQueue;
-use App\Notifications\VerifyEmailNotification;
-use App\Notifications\VerifyEmailNotificationQueue;
 
 /**
- * App\Models\User
+ * App\Models\User.
  *
  * @property int $id
  * @property string $uuid
@@ -38,6 +38,7 @@ use App\Notifications\VerifyEmailNotificationQueue;
  * @property string|null $image
  * @property string|null $image_url
  * @property-read \App\Models\AuthTwoFactor|null $authTwoFactor
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
@@ -167,7 +168,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Generate Two Factor Code (OTP) for login
+     * Generate Two Factor Code (OTP) for login.
      *
      * @return void
      */
@@ -180,7 +181,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Reset Two Factor Code (OTP)
+     * Reset Two Factor Code (OTP).
      *
      * @return void
      */
@@ -193,38 +194,26 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * get image of user
+     * get image of user.
      *
      * @return string
      */
     public function getImage(): string
     {
-        if ($this->imageUrlExists($this->image_url)) {
-            return $this->image_url;
-        } else {
-            return asset('storage/images/profile-pic-male.jpg');
+        $url = $this->image_url;
+        if ($url) {
+            $headers = get_headers($url);
+            $status = stripos($headers[0], '200 OK') ? true : false;
+            if ($status === true) {
+                return $this->image_url;
+            }
         }
+
+        return asset('storage/images/profile-pic-male.jpg');
     }
 
     /**
-     * check image Url Exists
-     *
-     * @param string|null $url
-     * @return boolean
-     */
-    public function imageUrlExists(?string $url): bool
-    {
-        if (empty($url)) {
-            return false;
-        }
-
-        $headers = get_headers($url);
-
-        return stripos($headers[0], "200 OK") ? true : false;
-    }
-
-    /**
-     * Relation authTwoFactor belongsTo user (one to one)
+     * Relation authTwoFactor belongsTo user (one to one).
      *
      * @return object
      */

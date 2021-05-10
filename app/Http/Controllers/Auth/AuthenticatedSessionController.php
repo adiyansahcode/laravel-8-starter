@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -32,7 +33,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $auth = \Auth::user();
+        $auth = Auth::user();
         $auth->update([
             'last_login_at' => now()->toDateTimeString(),
             'last_login_ip' => $request->getClientIp(),
@@ -51,7 +52,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): object
     {
-        \Auth::logout();
+        Auth::logout();
 
         $request->session()->invalidate();
 

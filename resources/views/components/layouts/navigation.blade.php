@@ -1,39 +1,40 @@
-<nav class="bg-white shadow-sm" x-data="{ open: false }">
+<nav class="bg-white shadow" x-data="{ open: false }">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between h-16">
+    <div class="flex items-center justify-between h-16">
       <div class="flex">
         <div class="flex-shrink-0 flex items-center">
-          <a href="{{ route('dashboard') }}">
-            <x-layouts.application-logo class="block h-10 w-auto fill-current text-gray-600" />
-          </a>
+          <x-layouts.application-logo class="block h-10 w-auto fill-current text-gray-600" />
         </div>
 
-        <div class="hidden sm:ml-6 sm:flex">
-          <a href="{{ route('dashboard') }}"
-            class="inline-flex items-center px-1 pt-1 border-b-2 border-gray-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-gray-700 transition duration-150 ease-in-out">
-            Dashboard
-          </a>
-          <a href="#"
-            class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-            Menu 1
-          </a>
+        <div class="hidden md:block">
+          <div class="ml-8 flex items-baseline space-x-5">
+            <a href="{{ route('dashboard') }}"
+              class="py-3 border-b-2 border-gray-500 text-sm font-medium leading-5 capitalize text-gray-900 focus:outline-none focus:border-gray-700 transition duration-150 ease-in-out">
+              Dashboard
+            </a>
+            <a href="#"
+              class="py-3 text-sm font-medium leading-5 capitalize text-gray-500 focus:outline-none focus:text-gray-700 focus:border-gray-300 hover:text-gray-700 hover:border-gray-300 transition duration-150 ease-in-out">
+              Menu 1
+            </a>
+          </div>
         </div>
       </div>
+
       <div class="hidden sm:ml-6 sm:flex sm:items-center">
         <!-- Profile dropdown -->
         <x-dropdown class="ml-3 relative">
           <x-slot name="trigger">
-            <button
-              class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out"
-              id="user-menu" aria-label="User menu" aria-haspopup="true">
+            <button id="user-menu" aria-label="User menu" aria-haspopup="true"
+              class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out" >
+              <span class="sr-only">Open user menu</span>
               <img class="h-8 w-8 rounded-full" alt="profile" src="{{ Auth::user()->getImage() }}" />
             </button>
           </x-slot>
 
-          <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg">
+          <div class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
             <div class="py-1 rounded-md bg-white shadow-xs">
               <a href="{{ route('profile') }}"
-                class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+                class="block text-left w-full px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
                 Profile
               </a>
               <x-logout
@@ -63,10 +64,11 @@
     </div>
   </div>
 
+  <!-- Mobile menu, show/hide based on menu state. -->
   <div class="sm:hidden" x-show="open" @click.away="open = false">
     <div class="pt-2 pb-3">
       <a href="{{ route('dashboard') }}"
-        class="block pl-3 pr-4 py-2 border-l-4 border-gray-500 text-base font-medium text-gray-700 bg-indigo-50 focus:outline-none focus:text-gray-800 focus:bg-indigo-100 focus:border-indigo-700 transition duration-150 ease-in-out">
+        class="block pl-3 pr-4 py-2 border-l-4 border-gray-500 text-base font-medium text-gray-700 bg-gray-50 focus:outline-none focus:text-gray-800 focus:bg-gray-100 focus:border-gray-700 transition duration-150 ease-in-out">
         Dashboard
       </a>
       <a href="#"
@@ -80,8 +82,8 @@
           <img class="h-10 w-10 rounded-full" alt="profile" src="{{ Auth::user()->getImage() }}" />
         </div>
         <div class="ml-3">
-          <div class="text-base font-medium leading-6 text-gray-800">Tom Cook</div>
-          <div class="text-sm font-medium leading-5 text-gray-500">tom@example.com</div>
+          <div class="text-base font-medium leading-6 text-gray-800">{{ Auth::user()->fullname }}</div>
+          <div class="text-sm font-medium leading-5 text-gray-500">{{ Auth::user()->email }}</div>
         </div>
       </div>
       <div class="mt-3" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">

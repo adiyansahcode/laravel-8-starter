@@ -1,11 +1,4 @@
-<x-app-layout>
-
-  <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __("Profile") }}
-    </h2>
-  </x-slot>
-
+<x-layouts.app :title="__('Profile')">
   <div class="py-5">
     <div class="max-w-7xl sm:max-w-md mx-auto sm:px-6 md:px-6 lg:px-8 xl:px-8">
       <div class="shadow-md overflow-hidden sm:rounded-md bg-white">
@@ -51,15 +44,13 @@
         </div>
 
         <div class="mt-3 mb-3">
-          <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <x-card-link :href="route('logout')" onclick="event.preventDefault(); this.closest('form').submit();">
-              {{ __("Log out") }}
-            </x-card-link>
-          </form>
+          <x-logout
+            class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+            Sign Out
+          </x-logout>
         </div>
 
       </div>
     </div>
   </div>
-</x-app-layout>
+</x-layouts.app>

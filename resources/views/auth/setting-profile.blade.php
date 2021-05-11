@@ -1,11 +1,4 @@
-<x-app-layout>
-
-  <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-      {{ __('Profile') }}
-    </h2>
-  </x-slot>
-
+<x-layouts.app :title="__('Profile')">
   <div class="py-5">
     <div class="max-w-7xl sm:max-w-md mx-auto sm:px-6 md:px-6 lg:px-8 xl:px-8">
       <div class="shadow-md overflow-hidden sm:rounded-md">
@@ -133,4 +126,4 @@
       </div>
     </div>
   </div>
-</x-app-layout>
+</x-layouts.app>

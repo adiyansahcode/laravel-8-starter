@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -16,7 +18,7 @@ class AuthenticatedSessionController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function create(): object
+    public function create(): View
     {
         return view('auth.login');
     }
@@ -27,7 +29,7 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request): object
+    public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
 
@@ -35,9 +37,17 @@ class AuthenticatedSessionController extends Controller
 
         $auth = Auth::user();
         $auth->update([
+            'fcm_token' => null,
             'last_login_at' => now()->toDateTimeString(),
             'last_login_ip' => $request->getClientIp(),
         ]);
+
+        $fcm = config('firebase.fcm');
+        if ($fcm) {
+            $auth->update([
+                'fcm_token' => $request->fcmToken,
+            ]);
+        }
 
         $auth->sendTwoFactorCodeNotification();
 
@@ -50,7 +60,7 @@ class AuthenticatedSessionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(Request $request): object
+    public function destroy(Request $request): RedirectResponse
     {
         Auth::logout();
 

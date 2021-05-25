@@ -16,6 +16,8 @@
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "kreait/laravel-firebase": "^3.1",
+        "laravel-notification-channels/fcm": "~2.0",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "owenvoke/blade-fontawesome": "^1.8",

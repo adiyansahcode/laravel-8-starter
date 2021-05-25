@@ -79,9 +79,13 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
 
-Route::get('/profile', [ProfileController::class, '__invoke'])
+Route::get('/profile', [ProfileController::class, 'index'])
                 ->middleware('auth')
                 ->name('profile');
+
+Route::post('/profile-notif', [ProfileController::class, 'send'])
+                ->middleware('auth')
+                ->name('profile.notif');
 
 Route::get('/setting/profile', [SettingController::class, 'profile'])
                 ->middleware(['auth', 'password.confirm'])

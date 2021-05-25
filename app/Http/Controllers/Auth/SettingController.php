@@ -21,8 +21,9 @@ class SettingController extends Controller
      */
     public function profile()
     {
+        $user = Auth::user();
         $data = [
-            'user' => Auth::user(),
+            'user' => $user,
         ];
 
         return view('auth.setting-profile', $data);

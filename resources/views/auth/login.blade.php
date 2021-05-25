@@ -14,7 +14,7 @@
       <x-alert type="success" class="mb-4 font-medium text-sm text-green-600" />
       <x-alert type="error" class="mb-4 font-medium text-sm text-red-600" />
 
-      <x-form action="{{ route('login') }}" novalidate autocomplete="off">
+      <x-form id="form-login" action="{{ route('login') }}" novalidate autocomplete="off">
 
         <div>
           <x-label for="username" class="block font-medium text-sm text-gray-700" />
@@ -69,4 +69,4 @@
       </x-form>
     </div>
   </div>
-  </x-layouts.base>
+</x-layouts.base>

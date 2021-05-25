@@ -4,6 +4,7 @@
 /storage/*.key
 /storage/debugbar
 /storage/clockwork
+/storage/firebase
 /vendor
 .env
 .env.backup

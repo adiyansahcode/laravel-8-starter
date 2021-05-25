@@ -25,4 +25,53 @@
 
   @bukScripts
   @stack('scripts')
+
+  @if(config('firebase.fcm') === true)
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyDcwoqYTOccjWfSXQJ9i92sY5xFZlomY98",
+        authDomain: "laravel-firebase-notific-99ac6.firebaseapp.com",
+        databaseURL: "https://laravel-firebase-notific-99ac6-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "laravel-firebase-notific-99ac6",
+        storageBucket: "laravel-firebase-notific-99ac6.appspot.com",
+        messagingSenderId: "615116595377",
+        appId: "1:615116595377:web:830069a9f103cdc9970290",
+        measurementId: "G-89XK1FNDYM"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      const messaging = firebase.messaging();
+      messaging.onMessage(function (payload) {
+        const title = payload.notification.title;
+        const options = {
+            body: payload.notification.body,
+            icon: payload.notification.icon,
+        };
+        new Notification(title, options);
+      });
+    </script>
+
+    @if(Request::is('login'))
+      <script>
+        if (document.getElementById('form-login') !== null) {
+          messaging
+            .requestPermission()
+            .then(function () {
+                return messaging.getToken()
+            })
+            .then(function (response) {
+              var form = document.getElementById('form-login');
+              form.innerHTML += '<input type="hidden" name="fcmToken" id="fcmToken" value="' + response + '" >';
+            }).catch(function (error) {
+                alert(error);
+            });
+        }
+      </script>
+    @endif
+  @endif
 </x-html>

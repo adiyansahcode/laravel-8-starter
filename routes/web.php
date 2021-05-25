@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +20,8 @@ Route::get('/', function () {
     return redirect(route('login'));
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth','authTwoFactor'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth','authTwoFactor'])
+    ->name('dashboard');
 
 require __DIR__ . '/auth.php';

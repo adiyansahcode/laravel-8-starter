@@ -97,6 +97,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'auth_two_factor_id',
         'image',
         'image_url',
+        'fcm_token',
     ];
 
     /**
@@ -220,5 +221,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function authTwoFactor(): object
     {
         return $this->belongsTo(AuthTwoFactor::class, 'auth_two_factor_id');
+    }
+
+    /**
+     * Specifies the user's FCM token
+     *
+     * @return string|array
+     */
+    public function routeNotificationForFcm()
+    {
+        return $this->fcm_token;
     }
 }

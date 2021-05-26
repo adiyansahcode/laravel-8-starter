@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use App\Notifications\FirebaseNotification;
-use App\Notifications\FirebaseNotificationQueue;
 
 class DashboardController extends Controller
 {
@@ -23,8 +21,9 @@ class DashboardController extends Controller
     {
         $auth = Auth::user();
 
-        $auth->notify(new FirebaseNotificationQueue());
-        // $auth->notify(new FirebaseNotification());
+        $title = "hello";
+        $message = "welcome to dashboard";
+        $auth->sendFirebaseNotification($title, $message);
 
         $data = [
             'user' => $auth,

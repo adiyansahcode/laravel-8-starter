@@ -10,6 +10,8 @@ use App\Notifications\ResetPasswordNotification;
 use App\Notifications\ResetPasswordNotificationQueue;
 use App\Notifications\VerifyEmailNotification;
 use App\Notifications\VerifyEmailNotificationQueue;
+use App\Notifications\FirebaseNotification;
+use App\Notifications\FirebaseNotificationQueue;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -224,6 +226,21 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
+     * Send a OTP notification to the user.
+     *
+     * @return void
+     */
+    public function updateFcmToken(string $token): void
+    {
+        $fcm = config('firebase.fcm');
+        if ($fcm) {
+            $this->timestamps = false;
+            $this->fcm_token = $token;
+            $this->save();
+        }
+    }
+
+    /**
      * Specifies the user's FCM token
      *
      * @return string|array
@@ -231,5 +248,19 @@ class User extends Authenticatable implements MustVerifyEmail
     public function routeNotificationForFcm()
     {
         return $this->fcm_token;
+    }
+
+    /**
+     * Send a Firebase notification to the user.
+     *
+     * @return void
+     */
+    public function sendFirebaseNotification(string $title, string $message): void
+    {
+        $fcm = config('firebase.fcm');
+        if ($fcm) {
+            // $this->notify(new FirebaseNotification());
+            $this->notify(new FirebaseNotificationQueue($title, $message));
+        }
     }
 }

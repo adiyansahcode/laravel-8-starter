@@ -21,13 +21,28 @@ class FirebaseNotificationQueue extends Notification implements ShouldQueue
     use Queueable;
 
     /**
+     * The title.
+     *
+     * @var string
+     */
+    public $title;
+
+    /**
+     * The title.
+     *
+     * @var string
+     */
+    public $message;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $title, string $message)
     {
-        // test
+        $this->title = $title;
+        $this->message = $message;
     }
 
     /**
@@ -44,11 +59,14 @@ class FirebaseNotificationQueue extends Notification implements ShouldQueue
     public function toFcm($notifiable)
     {
         return FcmMessage::create()
-            ->setData(['data1' => 'value', 'data2' => 'value2'])
+            ->setData([
+                'uuid' => $notifiable->uuid,
+                'datetime' => now()->toDateTimeString(),
+            ])
             ->setNotification(
                 NotificationFirebase::create()
-                ->setTitle('Account Activated')
-                ->setBody('Your account has been activated.')
+                ->setTitle($this->title)
+                ->setBody($this->message)
                 ->setImage('https://raw.githubusercontent.com/adiyansahcode/adiyansahcode/main/assets/gmail.svg')
             )
             ->setAndroid(

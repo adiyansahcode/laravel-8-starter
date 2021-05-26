@@ -14,6 +14,7 @@ use NotificationChannels\Fcm\Resources\ApnsConfig;
 use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
 use NotificationChannels\Fcm\Resources\Notification as NotificationFirebase;
 use NotificationChannels\Fcm\Resources\WebpushConfig;
+use NotificationChannels\Fcm\Resources\WebpushFcmOptions;
 
 class FirebaseNotificationQueue extends Notification implements ShouldQueue
 {
@@ -48,7 +49,7 @@ class FirebaseNotificationQueue extends Notification implements ShouldQueue
                 NotificationFirebase::create()
                 ->setTitle('Account Activated')
                 ->setBody('Your account has been activated.')
-                ->setImage('http://example.com/url-to-image-here.png')
+                ->setImage('https://raw.githubusercontent.com/adiyansahcode/adiyansahcode/main/assets/gmail.svg')
             )
             ->setAndroid(
                 AndroidConfig::create()
@@ -58,6 +59,11 @@ class FirebaseNotificationQueue extends Notification implements ShouldQueue
             ->setApns(
                 ApnsConfig::create()
                 ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios'))
+            )
+            ->setWebpush(
+                WebpushConfig::create()
+                ->setFcmOptions(WebpushFcmOptions::create()->setAnalyticsLabel('analytics_web'))
+                ->setFcmOptions(WebpushFcmOptions::create()->setLink('http://localhost:8105'))
             );
     }
 

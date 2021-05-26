@@ -47,10 +47,11 @@
 
       const messaging = firebase.messaging();
       messaging.onMessage(function (payload) {
+        console.log('Message received. ', payload);
         const title = payload.notification.title;
         const options = {
             body: payload.notification.body,
-            icon: payload.notification.icon,
+            icon: payload.notification.image,
         };
         new Notification(title, options);
       });

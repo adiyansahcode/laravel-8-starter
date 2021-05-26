@@ -255,12 +255,12 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @return void
      */
-    public function sendFirebaseNotification(string $title, string $message): void
+    public function sendFirebaseNotification(array $param): void
     {
         $fcm = config('firebase.fcm');
         if ($fcm) {
             // $this->notify(new FirebaseNotification());
-            $this->notify(new FirebaseNotificationQueue($title, $message));
+            $this->notify(new FirebaseNotificationQueue($param));
         }
     }
 }

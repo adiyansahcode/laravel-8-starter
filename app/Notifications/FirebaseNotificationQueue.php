@@ -39,10 +39,10 @@ class FirebaseNotificationQueue extends Notification implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(string $title, string $message)
+    public function __construct(array $param)
     {
-        $this->title = $title;
-        $this->message = $message;
+        $this->title = $param['title'];
+        $this->message = $param['message'];
     }
 
     /**
@@ -67,7 +67,7 @@ class FirebaseNotificationQueue extends Notification implements ShouldQueue
                 NotificationFirebase::create()
                 ->setTitle($this->title)
                 ->setBody($this->message)
-                ->setImage('https://raw.githubusercontent.com/adiyansahcode/adiyansahcode/main/assets/gmail.svg')
+                ->setImage('https://raw.githubusercontent.com/adiyansahcode/adiyansahcode/main/assets/laravel-icon-new.svg')
             )
             ->setAndroid(
                 AndroidConfig::create()
@@ -83,18 +83,5 @@ class FirebaseNotificationQueue extends Notification implements ShouldQueue
                 ->setFcmOptions(WebpushFcmOptions::create()->setAnalyticsLabel('analytics_web'))
                 ->setFcmOptions(WebpushFcmOptions::create()->setLink('http://localhost:8105'))
             );
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            // array
-        ];
     }
 }

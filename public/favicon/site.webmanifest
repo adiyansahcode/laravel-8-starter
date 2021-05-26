@@ -1,6 +1,6 @@
 {
-    "name": "Laravel 8 Starter",
-    "short_name": "Laravel 8 Starter",
+    "name": "Laravel 8",
+    "short_name": "Laravel 8",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

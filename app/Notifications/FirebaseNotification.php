@@ -13,19 +13,35 @@ use NotificationChannels\Fcm\Resources\ApnsConfig;
 use NotificationChannels\Fcm\Resources\ApnsFcmOptions;
 use NotificationChannels\Fcm\Resources\Notification as NotificationFirebase;
 use NotificationChannels\Fcm\Resources\WebpushConfig;
+use NotificationChannels\Fcm\Resources\WebpushFcmOptions;
 
 class FirebaseNotification extends Notification
 {
     use Queueable;
 
     /**
+     * The title.
+     *
+     * @var string
+     */
+    public $title;
+
+    /**
+     * The title.
+     *
+     * @var string
+     */
+    public $message;
+
+    /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $param)
     {
-        // test
+        $this->title = $param['title'];
+        $this->message = $param['message'];
     }
 
     /**
@@ -42,12 +58,15 @@ class FirebaseNotification extends Notification
     public function toFcm($notifiable)
     {
         return FcmMessage::create()
-            ->setData(['data1' => 'value', 'data2' => 'value2'])
+            ->setData([
+                'uuid' => $notifiable->uuid,
+                'datetime' => now()->toDateTimeString(),
+            ])
             ->setNotification(
                 NotificationFirebase::create()
-                ->setTitle('Account Activated')
-                ->setBody('Your account has been activated.')
-                ->setImage('http://example.com/url-to-image-here.png')
+                ->setTitle($this->title)
+                ->setBody($this->message)
+                ->setImage('https://raw.githubusercontent.com/adiyansahcode/adiyansahcode/main/assets/laravel-icon-new.svg')
             )
             ->setAndroid(
                 AndroidConfig::create()
@@ -57,19 +76,11 @@ class FirebaseNotification extends Notification
             ->setApns(
                 ApnsConfig::create()
                 ->setFcmOptions(ApnsFcmOptions::create()->setAnalyticsLabel('analytics_ios'))
+            )
+            ->setWebpush(
+                WebpushConfig::create()
+                ->setFcmOptions(WebpushFcmOptions::create()->setAnalyticsLabel('analytics_web'))
+                ->setFcmOptions(WebpushFcmOptions::create()->setLink('http://localhost:8105'))
             );
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            // array
-        ];
     }
 }

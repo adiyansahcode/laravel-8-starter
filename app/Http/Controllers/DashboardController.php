@@ -21,9 +21,11 @@ class DashboardController extends Controller
     {
         $auth = Auth::user();
 
-        $title = "hello";
-        $message = "welcome to dashboard";
-        $auth->sendFirebaseNotification($title, $message);
+        $msgData = [
+            'title' => 'hello',
+            'message' => 'welcome to dashboard',
+        ];
+        $auth->sendFirebaseNotification($msgData);
 
         $data = [
             'user' => $auth,

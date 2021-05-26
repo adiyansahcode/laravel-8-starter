@@ -27,9 +27,9 @@
   @stack('scripts')
 
   @if(config('firebase.fcm') === true)
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-messaging.js"></script>
     <script>
       var firebaseConfig = {
         apiKey: "AIzaSyDcwoqYTOccjWfSXQJ9i92sY5xFZlomY98",
@@ -41,38 +41,52 @@
         appId: "1:615116595377:web:830069a9f103cdc9970290",
         measurementId: "G-89XK1FNDYM"
       };
-
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
-
       const messaging = firebase.messaging();
-      messaging.onMessage(function (payload) {
-        console.log('Message received. ', payload);
-        const title = payload.notification.title;
-        const options = {
-            body: payload.notification.body,
-            icon: payload.notification.image,
-        };
-        new Notification(title, options);
-      });
-    </script>
 
-    @if(Request::is('login'))
-      <script>
+      if (!("Notification" in window)) {
+        console.log('This browser does not support desktop notification');
+      }
+      else if (Notification.permission === "granted") {
+        generateToken();
+        sendNotification();
+      }
+      else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(function (permission) {
+          if (permission === "granted") {
+            generateToken();
+            sendNotification();
+          }
+        });
+      }
+
+      function sendNotification() {
+        messaging.onMessage(function (payload) {
+          console.log('Message received. ', payload);
+          const title = payload.notification.title;
+          const options = {
+              body: payload.notification.body,
+              icon: payload.notification.image,
+          };
+          new Notification(title, options);
+        });
+      }
+
+      function generateToken() {
         if (document.getElementById('form-login') !== null) {
-          messaging
-            .requestPermission()
-            .then(function () {
-                return messaging.getToken()
-            })
-            .then(function (response) {
+          messaging.getToken().then((token) => {
+            if (token) {
               var form = document.getElementById('form-login');
-              form.innerHTML += '<input type="hidden" name="fcmToken" id="fcmToken" value="' + response + '" >';
-            }).catch(function (error) {
-                alert(error);
-            });
+              form.innerHTML += '<input type="hidden" name="fcmToken" id="fcmToken" value="' + token + '" >';
+            } else {
+              console.log('No registration token available. Request permission to generate one.');
+            }
+          }).catch((err) => {
+            console.log('An error occurred while retrieving token. ', err);
+          });
         }
-      </script>
-    @endif
+      }
+    </script>
   @endif
 </x-html>

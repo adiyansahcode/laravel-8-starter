@@ -259,7 +259,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $fcm = config('firebase.fcm');
         if ($fcm) {
-            // $this->notify(new FirebaseNotification());
+            // $this->notify(new FirebaseNotification($param));
             $this->notify(new FirebaseNotificationQueue($param));
         }
     }

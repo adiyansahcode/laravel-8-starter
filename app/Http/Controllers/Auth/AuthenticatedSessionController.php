@@ -37,7 +37,7 @@ class AuthenticatedSessionController extends Controller
 
         $auth = Auth::user();
         $auth->last_login_at = now()->toDateTimeString();
-        $auth->last_login_at = $request->getClientIp();
+        $auth->last_login_ip = $request->getClientIp();
         $auth->fcm_token = null;
         $auth->save();
 
